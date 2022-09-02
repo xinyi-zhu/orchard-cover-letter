@@ -15,7 +15,7 @@ class Draggable {
   
     over() {
       // Is mouse over object
-      if (mouseX> this.x && mouseX< this.x + this.w && mouseY> this.y && mouseY < this.y + this.h) {
+      if (mouseX > this.x-this.w/2 && mouseX < this.x + this.w/2 && mouseY > this.y-this.h/2 && mouseY < this.y + this.h/2) {
         this.rollover = true;
       } else {
         this.rollover = false;
@@ -23,31 +23,30 @@ class Draggable {
     }
   
     update() {
-      // Adjust location if being dragged
+    // Adjust location if being dragged
       if (this.dragging) {
-        // let xc = constrain(mouseX, 438, 555);
         this.x = mouseX + this.offsetX;
         this.y = mouseY + this.offsetY;
       }
     }
   
     show() {
-      stroke(0);
+      stroke(255);
       if (this.dragging) {
-        fill(0);
+        fill(100);
         cursor(HAND);
       } 
       else if (this.rollover) {
-        fill(0);
+        fill(100);
         cursor(HAND);
       } 
       else {
-        fill(120);
+        fill(200);
         cursor(ARROW);
       }
       
       if (this.img == "none"){
-        rect(this.x, this.y, this.w, this.h);
+        ellipse(this.x, this.y, this.w, this.h);
       }
       else{
         image(this.img,this.x,this.y,this.w,this.h);
@@ -55,12 +54,13 @@ class Draggable {
     }
   
     pressed() {
-  
-      if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY< this.y + this.h) {
-        this.dragging = true;
-        this.offsetX = this.x - mouseX;
-        this.offsetY = this.y - mouseY;
-      }
+  // Did I click on the rectangle?
+    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+    this.dragging = true;
+    // If so, keep track of relative location of click to corner of rectangle
+    this.offsetX = this.x - mouseX;
+    this.offsetY = this.y - mouseY;
+  }
     }
   
     released() {
